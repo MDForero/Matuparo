@@ -1,27 +1,25 @@
-name: deploy react app
+name: Node.js CI
+
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+
 jobs:
-  deploy:
-    name: deploy app
+  build:
+
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [ "12.x" ]
+        node-version: [10.x, 12.x, 14.x, 15.x]
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1 
-      with:
-        node-version: ${{matrix.node-version}}
-    - name: install packages
-    run: npm install
-    - name: registry github user
-    run: |
-      git config --global user.email <mforeroroldan@gmail.com>
-      git config --global user.name <MDForero>
-    - name: deploy the app
-    run: npm run build
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run deploy
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}

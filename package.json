@@ -1,5 +1,5 @@
 {
-  "homepage": "https://MDForero.github.io/Landing_matuparo",
+  "homepage": "https://MDForero.github.io",
   "name": "landing_page",
   "version": "0.1.0",
   "private": true,
@@ -23,6 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "deploy":"gh-pages -b master -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
